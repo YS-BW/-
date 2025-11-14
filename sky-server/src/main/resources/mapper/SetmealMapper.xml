@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.SetmealMapper">
-    <insert id="insertSetMeal">
+    <insert id="insertSetMeal" useGeneratedKeys="true" keyProperty="id">
         insert setmeal
-        (category_id,description,id,image,name,price,status,update_time,update_user,create_time,create_user)
+        (category_id,description,image,name,price,status,update_time,update_user,create_time,create_user)
         values
-        (#{categoryId},#{description},null,#{image},#{name},#{price},#{status},#{updateTime},#{updateUser},#{createTime},#{createUser})
+        (#{categoryId},#{description},#{image},#{name},#{price},#{status},#{updateTime},#{updateUser},#{createTime},#{createUser})
     </insert>
+    <select id="pageQuery" resultType="com.sky.entity.Setmeal">
+        select s.*,sd.name as categoryName
+        from setmeal s
+        left join setmeal_dish sd on s.id = sd.setmeal_id
+
+        <if test="name != null and name != ''">
+            and s.name like '%${name}%'
+        </if>
+        <if test="categoryId != null">
+            and category_id = #{categoryId}
+        </if>
+        <if test="status != null">
+            and s.status = #{status}
+        </if>
+
+        order by update_time desc
+    </select>
 </mapper>
