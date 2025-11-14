@@ -10,6 +10,7 @@ import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetMealService;
+import com.sky.vo.SetmealVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -49,7 +50,7 @@ public class SetMealServiceImp implements SetMealService {
         //1️⃣设置分页参数
         PageHelper.startPage(setmealPageQueryDTO.getPage(), setmealPageQueryDTO.getPageSize());
         //2️⃣调用mapper层接口
-        Page<Setmeal> page = setmealMapper.pageQuery(setmealPageQueryDTO);
+        Page<SetmealVO> page = setmealMapper.pageQuery(setmealPageQueryDTO);
         //3️⃣返回结果
         return new PageResult(page.getTotal(), page.getResult());
     }
