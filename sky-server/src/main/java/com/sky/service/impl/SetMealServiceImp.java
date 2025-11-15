@@ -82,7 +82,19 @@ public class SetMealServiceImp implements SetMealService {
     @ApiOperation("修改套餐")
     @Override
     public void updateSetMeal(SetmealDTO setmealDTO) {
-
+        //提取id
+        Long id = setmealDTO.getId();
+        //1️⃣修改套餐基本信息(补全信息)
+        setmealMapper.updateSetMeal(setmealDTO);
+        //2️⃣修改套餐菜品关系
+        //先删除
+        setmealdishMapper.deleteSetMealDish(id);
+        //再添加
+        for (SetmealDish setmealDishe : setmealDTO.getSetmealDishes()){
+            //绑定id
+            setmealDishe.setSetmealId(id);
+            setmealdishMapper.insertSetMealDish(setmealDishe);
+        }
     }
     @ApiOperation("根据id获取")
     @Override

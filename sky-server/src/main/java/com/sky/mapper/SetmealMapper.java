@@ -1,6 +1,7 @@
 package com.sky.mapper;
 import com.github.pagehelper.Page;
 import com.sky.anno.AutoFill;
+import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
@@ -29,4 +30,6 @@ public interface SetmealMapper {
     SetmealVO getById(Long id);
 
     void deleteSetMeal(Long id);
+
+    void updateSetMeal(SetmealDTO setmealDTO);
 }
