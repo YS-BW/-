@@ -32,4 +32,6 @@ public interface SetmealMapper {
     void deleteSetMeal(Long id);
 
     void updateSetMeal(SetmealDTO setmealDTO);
+
+    void startOrStop(Integer status, Long id);
 }

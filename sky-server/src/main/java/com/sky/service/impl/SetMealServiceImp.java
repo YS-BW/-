@@ -111,4 +111,9 @@ public class SetMealServiceImp implements SetMealService {
         }
         return setmealVO;
     }
+
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        setmealMapper.startOrStop(status,id);
+    }
 }
