@@ -1,17 +1,12 @@
 package com.sky.mapper;
-
 import com.github.pagehelper.Page;
 import com.sky.anno.AutoFill;
-
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealVO;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
 
 /**
  * @author 32770
@@ -31,7 +26,7 @@ public interface SetmealMapper {
 
     Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 
-    Setmeal getById(Long id);
+    SetmealVO getById(Long id);
 
     void deleteSetMeal(Long id);
 }

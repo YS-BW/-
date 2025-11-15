@@ -24,8 +24,8 @@ public class AutoFillAspect {
     @Before("@annotation(com.sky.anno.AutoFill)")
     public void autoFill(JoinPoint joinPoint) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         //1️⃣获取目标方法的注解,并拿到里面的属性值
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();//方法签名
-        Method method = methodSignature.getMethod();//方法对象
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Method method = methodSignature.getMethod();
         AutoFill autoFill = method.getAnnotation(AutoFill.class);
         OperationType operationType = autoFill.value();
         //2️⃣找到目标方法的参数对象

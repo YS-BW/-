@@ -8,6 +8,7 @@ import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.mapper.SetmealDishMapper;
+
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetMealService;
@@ -63,9 +64,10 @@ public class SetMealServiceImp implements SetMealService {
 
     @Override
     @Transactional
+    @ApiOperation("删除套餐")
     public void deleteSetMeal(List<Long> ids) {
         for (Long id : ids) {
-            Setmeal setmeal = setmealMapper.getById(id);
+            SetmealVO setmeal = setmealMapper.getById(id);
             //1️⃣删除套餐
             if (!setmeal.getStatus().equals(StatusConstant.ENABLE)){
                 //判断是否在售
@@ -75,5 +77,26 @@ public class SetMealServiceImp implements SetMealService {
             //2️⃣删除套餐菜品关系
             setmealdishMapper.deleteSetMealDish(id);
         }
+    }
+
+    @ApiOperation("修改套餐")
+    @Override
+    public void updateSetMeal(SetmealDTO setmealDTO) {
+
+    }
+    @ApiOperation("根据id获取")
+    @Override
+    public SetmealVO getById(Long id) {
+        log.info("根据id获取");
+
+        SetmealVO setmealVO =setmealMapper.getById(id);
+        log.info("套餐基本信息=#{}",setmealVO);
+        if (setmealdishMapper.countBySetmealId(id)> 0){
+            List<SetmealDish> setmealDishes = setmealdishMapper.getBySetmealId(id);
+            log.info("套餐关联菜品信息=#{}",setmealDishes);
+
+            setmealVO.setSetmealDishes(setmealDishes);
+        }
+        return setmealVO;
     }
 }
