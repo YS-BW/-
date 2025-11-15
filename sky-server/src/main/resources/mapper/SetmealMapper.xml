@@ -7,6 +7,9 @@
         values
         (#{categoryId},#{description},#{image},#{name},#{price},#{status},#{updateTime},#{updateUser},#{createTime},#{createUser})
     </insert>
+    <delete id="deleteSetMeal">
+        delete from setmeal where id = #{id}
+    </delete>
     <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
         select s.*,c.name as categoryName
         from setmeal s
@@ -25,5 +28,8 @@
         </where>
 
         order by update_time desc
+    </select>
+    <select id="getById" resultType="com.sky.entity.Setmeal">
+        select * from setmeal where id = #{id}
     </select>
 </mapper>

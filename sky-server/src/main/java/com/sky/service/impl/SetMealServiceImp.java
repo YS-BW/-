@@ -2,6 +2,7 @@ package com.sky.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
@@ -18,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+/**
+ * @author 32770
+ */
 @Service
 @Slf4j
 public class SetMealServiceImp implements SetMealService {
@@ -53,5 +59,21 @@ public class SetMealServiceImp implements SetMealService {
         Page<SetmealVO> page = setmealMapper.pageQuery(setmealPageQueryDTO);
         //3️⃣返回结果
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    @Transactional
+    public void deleteSetMeal(List<Long> ids) {
+        for (Long id : ids) {
+            Setmeal setmeal = setmealMapper.getById(id);
+            //1️⃣删除套餐
+            if (!setmeal.getStatus().equals(StatusConstant.ENABLE)){
+                //判断是否在售
+                setmealMapper.deleteSetMeal(id);
+            }
+
+            //2️⃣删除套餐菜品关系
+            setmealdishMapper.deleteSetMealDish(id);
+        }
     }
 }
